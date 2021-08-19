@@ -8,8 +8,11 @@ SHERPATOKEN_ADDRESS = "0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6"
 
 
 # ABI for web3
-with open("utils/sherpaABI.json", "r") as f:
-    SHERPATOKEN_ABI = json.load(f)
+try:
+    with open("utils/sherpaABI.json", "r") as f:
+        SHERPATOKEN_ABI = json.load(f)
+except:
+    pass
 
 # help
 HELP_TG = """JoeBot commands:

@@ -37,7 +37,7 @@ async def about(message: types.Message):
     price = await PangoSubGraph.getSherpaPrice()
     csupply_max = float(w3.fromWei(sherpatoken_contract.functions.totalSupply().call(), 'ether'))
     mainWallet_balance = float(w3.fromWei(sherpatoken_contract.functions.balanceOf("0xC3CA3d91682c4bB7c8eE8E3fC0E24E43D4f94717").call(), 'ether'))
-    print(csupply_max, mainWallet_balance)
+    # print(csupply_max, mainWallet_balance)
     csupply = csupply_max - mainWallet_balance
     mktcap = price * csupply
     await bot.send_message(message.chat.id, """SHERPA price is ${}

@@ -12,9 +12,14 @@ async def genericQuery(query):
 
 
 async def getAvaxPrice():
-    USDTPrice = await genericQuery("""{pair(id: "0x9ee0a4e21bd333a6bb2ab298194320b8daa26516") {token1Price}}""")
-    DAIPrice = await genericQuery("""{pair(id: "0x17a2e8275792b4616befb02eb9ae699aa0dcb94b") {token1Price}}""")
-    return float(USDTPrice["data"]["pair"]["token1Price"]) / 2 + float(DAIPrice["data"]["pair"]["token1Price"]) / 2
+    USDTe_query = await genericQuery("""{pair(id:"0xe28984e1ee8d431346d32bec9ec800efb643eef4"){token1Price, reserve1}}""")
+    DAIe_query = await genericQuery("""{pair(id:"0xba09679ab223c6bdaf44d45ba2d7279959289ab0"){token1Price, reserve1}}""")
+    avaxPriceUSDTe = float(USDTe_query["data"]["pair"]["token1Price"])
+    avaxPriceDAIe = float(DAIe_query["data"]["pair"]["token1Price"])
+    usdte_liq = float(USDTe_query["data"]["pair"]["reserve1"])
+    daie_liq = float(DAIe_query["data"]["pair"]["reserve1"])
+    sum_liq = usdte_liq + daie_liq
+    return avaxPriceUSDTe * (usdte_liq / sum_liq) + avaxPriceDAIe * (daie_liq / sum_liq)
 
 async def getSherpaPrice():
     avaxPrice = await getAvaxPrice()
